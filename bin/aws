@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+USING_STDIN="t"
+
+# if using stdin then we need to disable tty mode
+if [ ! -t 0 ] ; then USING_STDIN=""; fi
+
+# allow dynamic variables like columns
+shopt -s checkwinsize
+
+docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws --entrypoint aws stevenlafl/aws-cli-tools "$@"
